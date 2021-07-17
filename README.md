@@ -1,2 +1,2 @@
 # Past-USACO-Solutions
-will be done mostly in java because yes
+Some solutions are in java, some in c++.
