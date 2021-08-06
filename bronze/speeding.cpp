@@ -5,6 +5,7 @@
 // Time Limit: 4000 ms
 // 
 // Powered by CP Editor (https://cpeditor.org)
+// AC
 
 #include <bits/stdc++.h>
 
@@ -33,14 +34,14 @@ vector<string> split(T str, char sep){
 	
 }
 
+int bess[101];
+int road[101];
 
 void solve(){
 	ifstream fin("speeding.in");
 	ofstream fout("speeding.out");
 	int n,m;
 	fin>>n>>m;
-	int bess[100];
-	int road[100];
 	
 	int pre = 0;
 	for(int i = 0; i < n; i++){
