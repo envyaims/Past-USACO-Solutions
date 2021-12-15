@@ -17,7 +17,6 @@ bool check(int x){
 	int idx = lower_bound(a.begin(),a.end(),x) - a.begin();
 	int cur = k*l;
 	int alr = n-idx;
-	int cost = 0;
 	for(int i = idx-1; i >= idx-(x-alr); i--){
 		if(i < 0)return false;
 		cur -= max(0LL,x-a[i]);
