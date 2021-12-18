@@ -41,7 +41,6 @@ main(){
 		while(!now.empty()){
 			array<int,3> eat = now.top();
 			now.pop();
-			debug(time,eat);
 			ans = max(ans,time-eat[2]);
 			time += eat[1];
 			more(time);
