@@ -1,79 +1,97 @@
+#ifndef LOCAL
 #include <bits/stdc++.h>
+#define debug(...) 0
+#else
+#include "/Users/envyaims/Documents/template/stdc++.h"
+#include "/Users/envyaims/Documents/template/debug.cpp"
+#endif
+
 using namespace std;
 #define int long long
-struct DSU{
-	vector<int> p, sz;
-	DSU(int n){
-		p.resize(n);
-		sz.resize(n,1);
-		iota(p.begin(),p.end(),0);
-	}
-	int get(int x){
-		if(p[x] != x){
-			p[x] = get(p[x]);
-		}
-		return p[x];
-	}
-	bool unite(int a, int b){
-		a = get(a); b = get(b);
-		if(sz[a] < sz[b])swap(a,b);
-		if(a != b){
-			p[b] = a;
-			sz[a] += sz[b];
-		}
-		return a != b;
-	}
-	bool sameset(int a, int b){return get(a) == get(b);}
-	int getsize(int a){return sz[get(a)];}
-};
 
+int n, m;
+const int MAXN = 5e5+5;
+vector<int> graph[MAXN];
+vector<set<int>> comps;
+bool visited[MAXN];
+int cnt = 0;
+int onecomp, ncomp;
 
-void test_case(){
-	int n,m;
-	cin>>n>>m;
-	DSU dsu(n+1);
-	for(int i = 0; i < m; i++){
-		int a,b; cin>>a>>b;
-		dsu.unite(a,b);
-	}
-	vector<vector<int>> comp(n+1);
-	for(int i = 1; i <= n; i++){
-		comp[dsu.get(i)].push_back(i);
-	}
-	
-	auto mindif = [&](int a, int b){
-		int final = 1e9;
-		for(int i: comp[a]){
-			auto it = lower_bound(comp[b].begin(),comp[b].end(),i);
-			if(it != comp[b].end()){
-				final = min(final,*it-i);
+void dfs(int node){
+	if(node == 1)onecomp = cnt-1;
+	if(node == n)ncomp = cnt-1;
+    visited[node] = true;
+    comps.back().insert(node);
+    for(int i: graph[node]){
+        if(!visited[i]){
+            dfs(i);
+        }
+    }
+}
+
+void solve() {
+    cin>>n>>m;
+    fill(visited,visited+n+1,false);
+    cnt = 0;
+    for(int i = 1; i <= n; i++){
+        graph[i].clear();
+    }
+    comps.clear();
+    for(int i = 0; i < m; i++){
+        int u,v; cin>>u>>v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+    for(int i = 1; i <= n; i++){
+        if(!visited[i]){
+            cnt++;
+            comps.push_back({});
+            dfs(i);
+        }
+    }
+    
+    auto get = [&](int a, int b) -> int{
+		int ret = 1e9;
+		for(int i: comps[a]){
+			auto it = comps[b].lower_bound(i);
+			if(it != comps[b].end()){
+				ret = min(ret,*it-i);
 			}
-			if(it != comp[b].begin()){
-				it--;
-				final = min(final,i-*it);
+			if(it != comps[b].begin()){
+				--it;
+				ret = min(ret,i-*it);
 			}
 		}
-		
-		return final;
+		return ret * ret;
 	};
-	int ans = mindif(dsu.get(1),dsu.get(n));
-	int onecmp = dsu.get(1), lastcmp = dsu.get(n);
-	for(int i = 1; i <= n; i++){
-		if(i != onecmp && i != lastcmp && !comp[i].empty()){
-			int ff = mindif(onecmp,i), ss = mindif(i,lastcmp);
-			ans = min(ans,ff*ff+ss*ss);
+	
+	auto mincost = [&](int a, int b) -> int{
+		if(comps[a].size() > comps[b].size()){
+			return get(b,a);
 		}
+		return get(a,b);
+	};
+	
+	int ans = get(onecomp,ncomp);
+	for(int i = 0; i < cnt; i++){
+		if(i == onecomp || i == ncomp)continue;
+		int x = mincost(onecomp,i);
+		int y = mincost(ncomp,i);
+		ans = min(ans,x+y);
 	}
-	printf("%lld\n",ans);
-	
+	cout<<ans<<"\n";
+
+
 }
-main(){
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	int t; cin>>t;
-	while(t--){
-		test_case();
-	}
-	
-	
+ 
+signed main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1;
+    cin>>t;
+    while (t--) {
+        solve();
+    }
+ 
 }
+
