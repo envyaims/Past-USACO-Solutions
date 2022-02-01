@@ -72,7 +72,7 @@ void solve() {
 		return get(a,b);
 	};
 	
-	int ans = get(onecomp,ncomp);
+	int ans = mincost(onecomp,ncomp);
 	for(int i = 0; i < cnt; i++){
 		if(i == onecomp || i == ncomp)continue;
 		int x = mincost(onecomp,i);
