@@ -20,8 +20,8 @@ int test(int a, int b){
 		return 1 + odd + test((a + odd)/2,b);
 	}
 	else{
-		// either increase a by 1 multiple times and go straight to be OR
-		// Multiply A by 2 and add 1 if B is odd
+		// either increase a by 1 multiple times and go straight to B OR
+		// Multiply A by 2 and add 1 (if B is odd)
 		// Here I am doing the inverse - I am dividing B by 2 instead to meet A and adding 1 if it's odd
 		int odd = b % 2;
 		return min(b - a, 1 + odd + test(a, b/2));
