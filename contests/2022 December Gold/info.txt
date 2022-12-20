@@ -1,0 +1,8 @@
+USACO December 2022 Gold Contest
+
+In contest:
+A: 15/20
+B: 21/21
+C: 7/20
+
+Since then I have fixed the C code and it should pass all test cases now.
