@@ -6,3 +6,5 @@ B: 21/21
 C: 7/20
 
 Since then I have fixed the C code and it should pass all test cases now.
+
+UPD: 684 MISSED CUTOFF BY 16 POINTS LOL
