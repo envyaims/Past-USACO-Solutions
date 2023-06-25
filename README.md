@@ -3,12 +3,6 @@ You can search for most of these by division. If they are the older problems and
 
 Most of the solutions will get all test cases correct
 
-The contests folder will be contests I have participated in and are solutions I wrote up during the contest. They include:
-
-
-2021 December Bronze
-
-
-2021 December Silver
+The contests folder will be contests I have participated in and are solutions I wrote up during the contest.
 
 
